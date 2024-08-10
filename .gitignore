@@ -1,0 +1,12 @@
+# R hidden files
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# autosaved MS Office stuff
+~*
+
+# Apple folder formatting
+**/.DS_Store
