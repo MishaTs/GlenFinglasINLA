@@ -1,5 +1,5 @@
 # GlenFinglas
-Data cleaning, visualisation, and analysis for MSc Dissertation on Glen Finglas landscape-scale upland grazing experiment in the Southern Highlands. This repository contains no data, which can be obtained on request from the James Hutton Institute, [Copernicus Data Portal](https://ssoidp.copernicus.eu/idp/umsso20/login?faq) and [E-OBS website](https://surfobs.climate.copernicus.eu/dataaccess/access_eobs.php).
+Data cleaning, visualisation, and analysis for MSc Dissertation on Glen Finglas landscape-scale upland grazing experiment in the Southern Highlands. This repository contains no data, which can be obtained on request from the James Hutton Institute, [Copernicus Data Portal](https://ssoidp.copernicus.eu/idp/umsso20/login?faq), and [E-OBS website](https://surfobs.climate.copernicus.eu/dataaccess/access_eobs.php).
 
 # Definitions
 
