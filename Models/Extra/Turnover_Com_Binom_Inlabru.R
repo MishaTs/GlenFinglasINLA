@@ -340,7 +340,7 @@ ggroc(rocobj, colour = 'steelblue', size = 2) +
   ggtitle(paste0('ROC Curve ', '(AUC = ', auc, ')')) +
   theme_minimal()
 
-
+# posterior plots for alternative AR terms hidden
 # inlaSpatTempAR2PvalT_TurnComBin<-rep(NA, nrow=(vegINLA))
 # for(i in 1:nrow(vegINLA)){
 #   inlaSpatTempAR2PvalT_TurnComBin[i]<-inla.pmarginal(q=vegINLA$hillBryo1[i],
@@ -396,11 +396,6 @@ ggroc(rocobj, colour = 'steelblue', size = 2) +
 #   theme_bw()
 # 
 # cowplot::plot_grid(plotlist = plots_TurnComBin, nrow = 6)
-
-
-
-#### Plotting ####
-# currently non-functional
 
 #### Exports ####
 write_rds(fitNull_TurnComBin, "./Models/Objects/fitNull_TurnComBin.rds")

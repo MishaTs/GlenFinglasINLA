@@ -9,6 +9,7 @@ meshYr_BryoDiv <- fm_mesh_1d(years_BryoDiv, boundary = "free")
 # visualise mesh
 ggplot() + gg(meshYr_BryoDiv)
 
+# define model
 spdeST_BryoDiv102 <- stModel.define(smesh = mesh_BryoDiv,
                                     tmesh = meshYr_BryoDiv,
                                     # 102, 121, 202 and 220
@@ -26,7 +27,7 @@ spdeST_BryoDiv102 <- stModel.define(smesh = mesh_BryoDiv,
                                       psigma = c(5, 0.05) ## P(sigma > 5) = 0.1
                                       ))
 
-
+# build likelihoods
 inlaSpatTempCNonSep_BryoDiv <- ~ #Intercept(1) + 
   sheepOff + cowOff + 
   #treat +
@@ -48,6 +49,7 @@ likeSpatTempNonSep_BryoDiv <- like(
   #domain = list(geometry = mesh_BryoDiv),
 )
 
+# fit the model
 fitSpatTempNonSep_BryoDiv <- bru(components = inlaSpatTempCNonSep_BryoDiv,
                                  likeSpatTempNonSep_BryoDiv,
                                  options = list(
@@ -59,7 +61,7 @@ fitSpatTempNonSep_BryoDiv <- bru(components = inlaSpatTempCNonSep_BryoDiv,
                                    #control.inla = list(int.strategy = "eb"),
                                    verbose = FALSE))
 
-
+# test fit metrics
 cbind(fitSpatTemp_BryoDiv$waic$waic[1], fitSpatTemp_BryoDiv$dic$dic[1], -sum(log(fitSpatTemp_BryoDiv$cpo$cpo), na.rm = TRUE))
 cbind(fitSpatTempNonSep_BryoDiv$waic$waic[1], fitSpatTempNonSep_BryoDiv$dic$dic[1], -sum(log(fitSpatTempNonSep_BryoDiv$cpo$cpo), na.rm = TRUE))
 # 202
@@ -69,7 +71,7 @@ cbind(fitSpatTempNonSep_BryoDiv$waic$waic[1], fitSpatTempNonSep_BryoDiv$dic$dic[
 # 121, 220
 #no convergence
 
-
+# plot building off existing old plots from original Bryophyte diversity
 plots_BryoDiv2 <- list()
 plots_BryoDiv2[[1]] <- plots_BryoDiv[[1]]
 plots_BryoDiv2[[2]] <- plots_BryoDiv[[2]]

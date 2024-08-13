@@ -412,26 +412,6 @@ plots_BryoRich[[10]] <- ggplot(postProb5_BryoRich, aes(x = predicted, y = observ
 
 cowplot::plot_grid(plotlist = plots_BryoRich, nrow = 5)
 
-
-
-
-#### Plotting ####
-# currently non-functional
-pix_BryoRich <- fm_pixels(mesh_BryoRich)
-#Warning in handle_problems(e_input) :
-#The input evaluation 'Year' for 'field.group' failed. Perhaps the data object doesn't contain the needed variables? Falling back to '1'.
-pred_BryoRich <- predict(
-  fitSpatTempAR1_BryoRich, pix_BryoRich,
-  # it looks like we need to provide actual values for covariates (and year) for predictions to work
-  ~ field #+ Intercept + sheepOff + cowOff + windSpeed + meanT + solarRad + precip + litter + rock + elev + isW + isH + isU + isM 
-)
-samp <- generate(fitSpatTempAR1_BryoRich, pix_BryoRich,
-                 ~ field + Intercept + sheepOff + cowOff + windSpeed + meanT + solarRad + precip + litter + rock + elev + isW + isH + isU + isM,
-                 n.samples = 1
-)
-pred_BryoRich$sample <- samp[, 1]
-
-
 #### Exports ####
 write_rds(fitNull_BryoRich, "./Models/Objects/fitNull_BryoRich.rds")
 write_rds(fitTemp_BryoRich, "./Models/Objects/fitTemp_BryoRich.rds")

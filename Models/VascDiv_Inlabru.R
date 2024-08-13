@@ -70,6 +70,7 @@ inlaTempC_VascDiv <- ~ #Intercept(1) +
   field2(fBlock, model = "iid") + 
   field3(Plot_code, model = "iid")
 
+# test different AR variants
 inlaSpatTempAR1C_VascDiv <- ~ #Intercept(1) + 
   sheepOff + cowOff + 
   #treat +
@@ -573,7 +574,7 @@ cowplot::plot_grid(plotlist = spatPlots, nrow = 3,
 # can align widths to make things nicer, but not needed for now
 #, rel_widths = c(0.9495,1.5,1.0105))
 
-# test the fit with krieged diversity -- quite bad, but not sure which is "correct
+# test the fit with kriged diversity -- quite bad, but not sure which is "correct
 # ggplot(lambda1, aes(x = linkMean, y = hillBryo1)) + geom_point() +
 #        geom_abline(slope = 1, intercept = 0) +
 #        labs(y = "Observed", x = "Fitted") +

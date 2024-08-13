@@ -114,6 +114,7 @@ inlaSpatTempAR1C_TurnComBeta <- ~ #Intercept(1) +
                              # order <= 10
                              order = 1))
 
+# hidden alternative AR term formulae since models did not converge or were not used
 # inlaSpatTempAR2C_TurnComBeta <- ~ #Intercept(1) + 
 #   sheepOff + cowOff + 
 #   #treat +
@@ -268,7 +269,6 @@ inla.pmarginal(q = 0,
 
 
 #### Marginal distribution ####
-
 plots_TurnComBeta <- list()
 
 # Null model
@@ -303,7 +303,6 @@ plots_TurnComBeta[[2]] <- ggplot(postProb1_TurnComBeta, aes(x = predicted, y = o
 inlaTempPvalT_TurnComBeta<-rep(NA, nrow=(vegINLA))
 for(i in 1:nrow(vegINLA)){
   inlaTempPvalT_TurnComBeta[i]<-inla.pmarginal(q=vegINLA$nvcTurnSq[i],
-                                            # lots of infinity values, so this will not work
                                             marginal=fitTemp_TurnComBeta$marginals.fitted.values[[i]])
 }
 postProb2_TurnComBeta <- data.frame(predicted = fitTemp_TurnComBeta$summary.fitted.values$mean[1:length(vegINLA$nvcTurnSq)],
@@ -357,6 +356,7 @@ plots_TurnComBeta[[6]] <- ggplot(postProb3_TurnComBeta, aes(x = predicted, y = o
 
 cowplot::plot_grid(plotlist = plots_TurnComBeta, nrow = 3)
 
+# hidden alternative AR term checks since models did not converge or were not used
 # inlaSpatTempAR2PvalT_TurnComBeta<-rep(NA, nrow=(vegINLA))
 # for(i in 1:nrow(vegINLA)){
 #   inlaSpatTempAR2PvalT_TurnComBeta[i]<-inla.pmarginal(q=vegINLA$hillBryo1[i],
@@ -412,11 +412,6 @@ cowplot::plot_grid(plotlist = plots_TurnComBeta, nrow = 3)
 #   theme_bw()
 # 
 # cowplot::plot_grid(plotlist = plots_TurnComBeta, nrow = 6)
-
-
-
-#### Plotting ####
-# currently non-functional
 
 #### Exports ####
 write_rds(fitNull_TurnComBeta, "./Models/Objects/fitNull_TurnComBeta.rds")

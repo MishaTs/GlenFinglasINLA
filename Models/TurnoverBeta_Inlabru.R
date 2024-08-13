@@ -114,6 +114,7 @@ inlaSpatTempAR1C_TurnBeta <- ~ #Intercept(1) +
                              # order <= 10
                              order = 1))
 
+# hidden alternative AR term formulae since models did not converge or were not used
 # inlaSpatTempAR2C_TurnBeta <- ~ #Intercept(1) + 
 #   sheepOff + cowOff + 
 #   #treat +

@@ -196,7 +196,7 @@ table(vegFull$isW, as.numeric(vegFull$nTree >= 1))
 #                                                ifelse(ceiling(sum(isW, (nTree >= 1), na.rm = TRUE)/2) >= 1, 
 #                                                1, 0)))
 
-
+# get binary columns for all NVC sub-communities
 vegTest <- vegFull
 # a way to get a unique column for each NVC sub-community presence/absence
 uniqueNVC <- sort(unique(append(unique(vegFull$nvcM1),
@@ -323,6 +323,7 @@ nvcTurnoverSubCom <- function(H10_1, H12_1, H17_1, H18_1, H21_1, M11_1, M15_1, M
   return(numerator/denominator)
 }
 
+# add the sub-community turnover in a clunky way
 vegFull <- vegTest %>% mutate(ptCode = paste0(Plot, Block, Point)) %>% 
   group_by(ptCode) %>% 
   mutate(nvcTurn = nvcTurnoverCom(isH, isM, isU, isW, lag(isH), lag(isM), lag(isU), lag(isW)),
@@ -331,7 +332,7 @@ vegFull <- vegTest %>% mutate(ptCode = paste0(Plot, Block, Point)) %>%
                                         lag(H10), lag(H12), lag(H17), lag(H18), lag(H21), lag(M11), lag(M15), lag(M16), lag(M17), 
                                         lag(M18), lag(M19), lag(M20), lag(M22), lag(M23), lag(M25), lag(M26), lag(M35), lag(M6), 
                                         lag(U13), lag(U19), lag(U20), lag(U4), lag(U5), lag(U6), lag(W4), lag(W6)))
-
+# test alternative parametrisations; not used
 vegFull <- vegFull %>% mutate(nvcTurnWt = (nvcTurn*2 + nvcTurnSub)/3,
                                nvcTurnWt2 = (nvcTurn*10 + nvcTurnSub)/11) %>% ungroup()
 
@@ -558,8 +559,3 @@ anim_save("./Vegetation/NVCPlots/nvcPrimarySpatialBlocks.mkv",
 
 # render as GIF in-window for viewing
 animate(timePlot, renderer = gifski_renderer())
-
-############### Old Modelling Code ############### 
-
-inlabru::glplot(mod_W_M, mesh) +
-  scale_fill_brewer(palette = "Blues") 

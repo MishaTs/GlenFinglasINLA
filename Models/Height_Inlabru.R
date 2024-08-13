@@ -370,6 +370,7 @@ plots_Height[[6]] <- ggplot(postProb3_Height, aes(x = predicted, y = observed)) 
 
 cowplot::plot_grid(plotlist = plots_Height, nrow = 3)
 
+# hidden alternative AR term checks since models did not converge or were not used
 # inlaSpatTempAR2PvalT_Height<-rep(NA, nrow=(vegINLA))
 # for(i in 1:nrow(vegINLA)){
 #   inlaSpatTempAR2PvalT_Height[i]<-inla.pmarginal(q=vegINLA$hillBryo1[i],
@@ -425,24 +426,6 @@ cowplot::plot_grid(plotlist = plots_Height, nrow = 3)
 #   theme_bw()
 # 
 # cowplot::plot_grid(plotlist = plots_Height, nrow = 6)
-
-
-
-#### Plotting ####
-# currently non-functional
-pix_Height <- fm_pixels(mesh_Height)
-#Warning in handle_problems(e_input) :
-#The input evaluation 'Year' for 'field.group' failed. Perhaps the data object doesn't contain the needed variables? Falling back to '1'.
-pred_Height <- predict(
-  fitSpatTempAR1_Height, pix_Height,
-  # it looks like we need to provide actual values for covariates (and year) for predictions to work
-  ~ field #+ Intercept + sheepOff + cowOff + windSpeed + meanT + solarRad + precip + litter + rock + elev + isW + isH + isU + isM 
-)
-samp <- generate(fitSpatTempAR1_Height, pix_Height,
-                 ~ field + Intercept + sheepOff + cowOff + windSpeed + meanT + solarRad + precip + litter + rock + elev + isW + isH + isU + isM,
-                 n.samples = 1
-)
-pred_Height$sample <- samp[, 1]
 
 #### Exports ####
 write_rds(fitNull_Height, "./Models/Objects/fitNull_Height.rds")

@@ -77,6 +77,7 @@ inlaTempC_BryoDiv <- ~ #Intercept(1) +
   field2(fBlock, model = "iid") + 
   field3(Plot_code, model = "iid")
 
+# tests for alternative AR structures
 inlaSpatTempAR1C_BryoDiv <- ~ #Intercept(1) + 
   sheepOff + cowOff + 
   #treat +
@@ -107,6 +108,7 @@ inlaSpatTempAR2C_BryoDiv <- ~ #Intercept(1) +
                              # order <= 10
                              order = 2))
 
+# as high as we for AR terms
 inlaSpatTempAR3C_BryoDiv <- ~ #Intercept(1) + 
   sheepOff + cowOff + 
   #treat +
@@ -275,26 +277,34 @@ inla.pmarginal(q = 0,
 plots_BryoDiv <- list()
 
 # Null model
+# define empty dataframe
 inlaNullPvalT_BryoDiv<-rep(NA, nrow=(vegINLA))
+# go through each observation
 for(i in 1:nrow(vegINLA)){
-  inlaNullPvalT_BryoDiv[i]<-inla.pmarginal(q=vegINLA$hillBryo1[i],
+  # get bayesian p-value
+  inlaNullPvalT_BryoDiv[i]<-inla.pmarginal(q=vegINLA$hillBryo1[i], # compare against actual observed value
+                                           # use full posteriors models to compute it
                                            marginal=fitNull_BryoDiv$marginals.fitted.values[[i]])
 }
 
+# generate dataset for plotting with predicted, observed, lower and upper CI values
+# add the p-value too
 postProb1_BryoDiv <- data.frame(predicted = fitNull_BryoDiv$summary.fitted.values$mean[1:length(vegINLA$hillBryo1)],
                                 observed = vegINLA$hillBryo1,
                                 lower = fitNull_BryoDiv$summary.fitted.values$`0.025quant`[1:length(vegINLA$hillBryo1)],
                                 upper = fitNull_BryoDiv$summary.fitted.values$`0.975quant`[1:length(vegINLA$hillBryo1)],
                                 p.value = inlaNullPvalT_BryoDiv) 
-
+# get max and min for plots
 min1_BryoDiv <- min(postProb1_BryoDiv[, c('upper', 'observed')], na.rm = TRUE)
 max1_BryoDiv <- max(postProb1_BryoDiv[, c('upper', 'observed')], na.rm = TRUE)
 
+# posterior probability plot of bayesian p-values
 plots_BryoDiv[[1]] <- ggplot(postProb1_BryoDiv, aes(x = p.value)) + 
   geom_histogram() +
   labs(y = "Count", x = "Posterior probability") +
   theme_bw()
 
+# observed vs fitted
 plots_BryoDiv[[2]] <- ggplot(postProb1_BryoDiv, aes(x = predicted, y = observed)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0) +
@@ -302,7 +312,7 @@ plots_BryoDiv[[2]] <- ggplot(postProb1_BryoDiv, aes(x = predicted, y = observed)
   lims(x = c(min1_BryoDiv, max1_BryoDiv), y = c(min1_BryoDiv, max1_BryoDiv)) + 
   theme_bw()
 
-# Temporal model
+# Temporal model -- repeat as above
 inlaTempPvalT_BryoDiv<-rep(NA, nrow=(vegINLA))
 for(i in 1:nrow(vegINLA)){
   inlaTempPvalT_BryoDiv[i]<-inla.pmarginal(q=vegINLA$hillBryo1[i],
@@ -330,7 +340,8 @@ plots_BryoDiv[[4]] <- ggplot(postProb2_BryoDiv, aes(x = predicted, y = observed)
   lims(x = c(min2_BryoDiv, max2_BryoDiv), y = c(min2_BryoDiv, max2_BryoDiv)) + 
   theme_bw()
 
-# Spatial temporal model
+# Spatial temporal model -- repeat as above
+#AR1
 inlaSpatTempAR1PvalT_BryoDiv<-rep(NA, nrow=(vegINLA))
 for(i in 1:nrow(vegINLA)){
   inlaSpatTempAR1PvalT_BryoDiv[i]<-inla.pmarginal(q=vegINLA$hillBryo1[i],
@@ -364,8 +375,10 @@ for(i in 1:nrow(vegINLA)){
                                                   marginal=fitSpatTempAR2_BryoDiv$marginals.fitted.values[[i]])
 }
 
+# originally, we plotted here
 #cowplot::plot_grid(plotlist = plots_BryoDiv, nrow = 3)
 
+#AR2
 inlaSpatTempAR2PvalT_BryoDiv<-rep(NA, nrow=(vegINLA))
 for(i in 1:nrow(vegINLA)){
   inlaSpatTempAR2PvalT_BryoDiv[i]<-inla.pmarginal(q=vegINLA$hillBryo1[i],
@@ -393,6 +406,7 @@ plots_BryoDiv[[8]] <- ggplot(postProb4_BryoDiv, aes(x = predicted, y = observed)
   lims(x = c(min4_BryoDiv, max4_BryoDiv), y = c(min4_BryoDiv, max4_BryoDiv)) + 
   theme_bw()
 
+#AR3
 inlaSpatTempAR3PvalT_BryoDiv<-rep(NA, nrow=(vegINLA))
 for(i in 1:nrow(vegINLA)){
   inlaSpatTempAR3PvalT_BryoDiv[i]<-inla.pmarginal(q=vegINLA$hillBryo1[i],
@@ -420,9 +434,8 @@ plots_BryoDiv[[10]] <- ggplot(postProb5_BryoDiv, aes(x = predicted, y = observed
   lims(x = c(min5_BryoDiv, max5_BryoDiv), y = c(min5_BryoDiv, max5_BryoDiv)) + 
   theme_bw()
 
+# plot everything for comparison
 cowplot::plot_grid(plotlist = plots_BryoDiv, nrow = 5)
-
-
 
 #### Plotting ####
 # hyperparameter plots
@@ -597,7 +610,7 @@ cowplot::plot_grid(plotlist = spatPlots, nrow = 3,
 # can align widths to make things nicer, but not needed for now
 #, rel_widths = c(0.9495,1.5,1.0105))
 
-# test the fit with krieged diversity -- quite bad, but not sure which is "correct
+# test the fit with kriged diversity -- quite bad, but not sure which is "correct
 # ggplot(lambda1, aes(x = linkMean, y = hillBryo1)) + geom_point() +
 #        geom_abline(slope = 1, intercept = 0) +
 #        labs(y = "Observed", x = "Fitted") +

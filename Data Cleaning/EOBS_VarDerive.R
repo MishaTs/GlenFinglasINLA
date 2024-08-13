@@ -2,7 +2,7 @@
 #### Climate data - Glen Finglas ####
 #### Original Author: Stuart Smith ####
 #### Editor: Misha Tseitlin ####
-#### Date: 21 May 2024 ####
+#### Date: 3 Jul 2024 ####
 #########################################################################################################################
 #clear system & package libraries
 #rm(list=ls())

@@ -340,6 +340,7 @@ plots_TurnBin[[6]] <- ggplot(postProb3_TurnBin, aes(x = predicted, y = observed)
 
 cowplot::plot_grid(plotlist = plots_TurnBin, nrow = 3)
 
+# tests for alternative AR structures hidden
 # inlaSpatTempAR2PvalT_TurnBin<-rep(NA, nrow=(vegINLA))
 # for(i in 1:nrow(vegINLA)){
 #   inlaSpatTempAR2PvalT_TurnBin[i]<-inla.pmarginal(q=vegINLA$hillBryo1[i],
@@ -395,11 +396,6 @@ cowplot::plot_grid(plotlist = plots_TurnBin, nrow = 3)
 #   theme_bw()
 # 
 # cowplot::plot_grid(plotlist = plots_TurnBin, nrow = 6)
-
-fitSpatTempAR1_TurnBin <- read_rds("./Models/Objects/fitSpatTempAR1_TurnBin.rds")
-
-#### Plotting ####
-# currently non-functional
 
 #### Exports ####
 write_rds(fitNull_TurnBin, "./Models/Objects/fitNull_TurnBin.rds")

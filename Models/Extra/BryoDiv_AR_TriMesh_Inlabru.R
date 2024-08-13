@@ -578,20 +578,5 @@ plots_BryoDivAlt[[16]] <- ggplot(postProb8_BryoDiv, aes(x = predicted, y = obser
   lims(x = c(min8_BryoDiv, max8_BryoDiv), y = c(min8_BryoDiv, max8_BryoDiv)) + 
   theme_bw()
 
+# plot it all to compare
 cowplot::plot_grid(plotlist = plots_BryoDivAlt, nrow = 8)
-
-
-#### Plotting ####
-pix_BryoDiv <- fm_pixels(mesh_BryoDiv)
-pred_BryoDiv <- predict(
-  fitSpatTempAR1_BryoDiv, pix_BryoDiv,
-  # it looks like we need to provide actual values for covariates (and year) for predictions to work
-  ~ field + Intercept + sheepOff + cowOff + windSpeed + meanT + solarRad + precip + litter + rock + elev + isW + isH + isU + isM 
-)
-samp <- generate(fitSpatTempAR1_BryoDiv, pix_BryoDiv,
-                 ~ field + Intercept + sheepOff + cowOff + windSpeed + meanT + solarRad + precip + litter + rock + elev + isW + isH + isU + isM,
-                 n.samples = 1
-)
-pred_BryoDiv$sample <- samp[, 1]
-
-

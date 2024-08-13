@@ -400,26 +400,8 @@ plots_VascRich[[10]] <- ggplot(postProb5_VascRich, aes(x = predicted, y = observ
   lims(x = c(min5_VascRich, max5_VascRich), y = c(min5_VascRich, max5_VascRich)) + 
   theme_bw()
 
+# plot all the posterior check plots
 cowplot::plot_grid(plotlist = plots_VascRich, nrow = 5)
-
-
-
-
-#### Plotting ####
-# currently non-functional
-pix_VascRich <- fm_pixels(mesh_VascRich)
-#Warning in handle_problems(e_input) :
-#The input evaluation 'Year' for 'field.group' failed. Perhaps the data object doesn't contain the needed variables? Falling back to '1'.
-pred_VascRich <- predict(
-  fitSpatTempAR1_VascRich, pix_VascRich,
-  # it looks like we need to provide actual values for covariates (and year) for predictions to work
-  ~ field #+ Intercept + sheepOff + cowOff + windSpeed + meanT + solarRad + precip + litter + rock + elev + isW + isH + isU + isM 
-)
-samp <- generate(fitSpatTempAR1_VascRich, pix_VascRich,
-                 ~ field + Intercept + sheepOff + cowOff + windSpeed + meanT + solarRad + precip + litter + rock + elev + isW + isH + isU + isM,
-                 n.samples = 1
-)
-pred_VascRich$sample <- samp[, 1]
 
 
 #### Exports ####
