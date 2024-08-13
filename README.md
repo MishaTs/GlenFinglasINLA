@@ -18,7 +18,7 @@ Data cleaning, visualisation, and analysis for MSc Dissertation on Glen Finglas 
 	* **`CEH Plant Database` Folder**: original CEH data for [vascular plant](https://catalogue.ceh.ac.uk/documents/9f097d82-7560-4ed2-af13-604a9110cf6d) and [bryophyte](https://www.brc.ac.uk/biblio/bryoatt-attributes-british-and-irish-mosses-liverworts-and-hornworts-spreadsheet) IDs and traits
 	* `EOBS_DataImport.R`: Read in E-OBS data from online and save intermediate output within the study area
 	* `EOBS_VarDerive.R`: Convert E-OBS raw data to our spatiotemporal scale to make usable and derive supplementary climate variables
-	* `FullDatasetMerge.R`: Combine all cleaned data (NVC, Diversity, DEM, NDWI, E-OBS, and spatial information to create a final dataset. Derive NVC turnover that requires the unified dataset
+	* `FullDatasetMerge.R`: Combine all cleaned data (NVC, Diversity, DEM, NDWI, E-OBS, and spatial objects) to create a final dataset. Derive NVC turnover that requires the unified dataset
 	* `NVCSurveyClean.R`: Clean raw, annual NVC data for analysis
 	* `PinFrameSurveyClean.R`: Clean species data and compute biodiversity measures
 	* `SpatialProcess_DEM_NDWI.R`: Convert spatial raster data to point-based values for analysis
